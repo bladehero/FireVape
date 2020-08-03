@@ -1,8 +1,8 @@
-﻿using FireVape.Interfaces.Client;
-using FireVape.Interfaces.Content;
-using FireVape.Interfaces.Content.Components;
-using FireVape.Interfaces.Content.Liquids;
-using FireVape.Interfaces.Content.Products;
+﻿using FireVape.Interfaces.Data.Client;
+using FireVape.Interfaces.Data.Content;
+using FireVape.Interfaces.Data.Content.Components;
+using FireVape.Interfaces.Data.Content.Liquids;
+using FireVape.Interfaces.Data.Content.Products;
 
 namespace FireVape.Interfaces.Data.Repositories
 {

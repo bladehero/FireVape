@@ -4,4 +4,12 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ContentModel\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FireVape.Interfaces\FireVape.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

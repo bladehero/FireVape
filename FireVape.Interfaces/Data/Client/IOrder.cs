@@ -1,4 +1,4 @@
-﻿using FireVape.Interfaces.Content.Components;
+﻿using FireVape.Interfaces.Data.Content.Components;
 using System;
 using System.Collections.Generic;
 

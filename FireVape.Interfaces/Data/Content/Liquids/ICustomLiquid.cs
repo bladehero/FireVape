@@ -1,5 +1,5 @@
-﻿using FireVape.Interfaces.Content.Components;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace FireVape.Interfaces.Data.Content.Liquids
 {

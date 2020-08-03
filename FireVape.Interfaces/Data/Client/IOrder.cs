@@ -11,7 +11,7 @@ namespace FireVape.Interfaces.Data.Client
         string Comment { get; set; }
         IClient Client { get; set; }
         IList<IComponentForSale> Products { get; set; }
-        IDiscount Discount { get; set; }
+        IDiscount<IComponentForSale> Discount { set; }
         IDelivery Delivery { get; set; }
         IOrderStatus Status { get; set; }
     }

@@ -5,7 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ContentModel\" />
+    <Folder Include="ContentModel\Liquids\" />
+    <Folder Include="ContentModel\Products\" />
   </ItemGroup>
 
   <ItemGroup>

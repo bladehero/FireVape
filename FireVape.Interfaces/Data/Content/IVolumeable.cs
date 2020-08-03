@@ -2,6 +2,7 @@
 {
     public interface IVolumeable
     {
-        int Volume { get; }
+        int Volume { get; set; }
+        string Unit { get; set; }
     }
 }

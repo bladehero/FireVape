@@ -5,6 +5,6 @@ namespace FireVape.Interfaces.Data.Content.Liquids
 {
     public interface ILiquid : IVolumeableComponentForSale
     {
-        IProductOption<IVolumeable> Option { get; set; }
+        IProductOption<IVolumeable> ProductOption { get; set; }
     }
 }

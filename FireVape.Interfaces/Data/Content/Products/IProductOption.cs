@@ -3,7 +3,7 @@
     public interface IProductOption<T>
     {
         IProductLine<T> ProductLine { get; set; }
-        T Option { get; set; }
+        T Value { get; set; }
         decimal Price { get; }
     }
 }

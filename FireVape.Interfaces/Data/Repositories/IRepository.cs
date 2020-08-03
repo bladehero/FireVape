@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace FireVape.Interfaces.Data.Repositories
 {
-    public interface IRepository<T> : IEnumerable<T>, IEnumerable, IDisposable where T : class
+    public interface IRepository<T> : IAsyncEnumerable<T>, IAsyncDisposable where T : class, IEntity
     {
-        T Get(Guid guid);
-        IEnumerable<T> GetAll(Expression<Func<T, bool>> predicate = null);
-        T GetOne(Expression<Func<T, bool>> predicate = null);
-        int GetCount(Expression<Func<T, bool>> predicate = null);
-        T Insert(T entity);
-        T Update(T entity);
-        bool Delete(Guid guid);
+        Task<T> GetAsync(Guid guid);
+        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null);
+        Task<T> GetOneAsync(Expression<Func<T, bool>> predicate = null);
+        Task<int> GetCountAsync(Expression<Func<T, bool>> predicate = null);
+        Task InsertAsync(T entity);
+        Task UpdateAsync(T entity);
+        Task DeleteAsync(Guid guid);
 
-        void Save();
+        Task SaveAsync();
     }
 }

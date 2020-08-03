@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FireVape.Interfaces.Data.Client
 {
-    public interface IOrder : IPricableCostable
+    public interface IOrder : IPricableCostable, IEntity
     {
         DateTime DateCreated { get; set; }
         DateTime DateCompleted { get; set; }

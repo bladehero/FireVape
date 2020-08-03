@@ -1,6 +1,6 @@
 ﻿namespace FireVape.Interfaces.Data.Content
 {
-    public interface IVolumeable
+    public interface IVolumeable : IEntity
     {
         int Volume { get; set; }
         string Unit { get; set; }

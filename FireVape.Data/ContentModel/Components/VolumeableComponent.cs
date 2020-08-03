@@ -1,8 +1,5 @@
 ﻿using FireVape.Interfaces.Data.Content;
 using FireVape.Interfaces.Data.Content.Components;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FireVape.Data.ContentModel.Components
 {

@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ContentModel\Liquids\" />
-    <Folder Include="ContentModel\Products\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FireVape.Interfaces\FireVape.Interfaces.csproj" />
   </ItemGroup>
 

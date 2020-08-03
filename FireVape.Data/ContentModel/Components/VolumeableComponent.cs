@@ -12,5 +12,6 @@ namespace FireVape.Data.ContentModel.Components
         public IFirm Firm { get; set; }
         public decimal Cost { get; set; }
         public int Volume { get; set; }
+        public string Unit { get; set; }
     }
 }

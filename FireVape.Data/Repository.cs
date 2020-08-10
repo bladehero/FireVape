@@ -14,49 +14,45 @@ using System.Threading.Tasks;
 
 namespace FireVape.Data
 {
-    public class Repository<T> : IRepository<T> where T : class, IEntity, new()
+    internal class Repository<T> : IRepository<T> where T : class, IEntity
     {
         private static readonly object _lock = new object();
+        private static readonly JsonSerializerSettings _serializationSettings = new JsonSerializerSettings
+        {
+            TypeNameHandling = TypeNameHandling.All,
+            NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented
+        };
         private ObservableCollection<T> _elements;
-        private TextWriter _writer;
 
-        public bool IsSaved { get; private set; }
+        public static readonly T[] EmptyArray = new T[0];
 
-        public const string FolderForRepositories = "Repositories";
+        public bool IsSaved { get; private set; } = true;
+
         public const string Extension = "json";
 
-        public string RepositoryName => 
-            typeof(T).FullName;
-        public string RepositoryPath => 
-            Path.Combine(FolderForRepositories, $"{RepositoryName}.{Extension}");
-
-        public Repository()
-        {
-            _writer = new StreamWriter(RepositoryPath, false);
-        }
+        public string RepositoryName =>
+            (typeof(T).GetCustomAttributes(false)
+                      .FirstOrDefault(x => x is DescriptionAttribute) as DescriptionAttribute)?
+                      .Description ?? typeof(T).FullName;
+        public string RepositoryPath =>
+            Path.Combine(UnitOfWork.FolderForRepositories, $"{RepositoryName}.{Extension}");
 
         private async Task Load()
         {
-            if (_elements != null)
+            if (_elements == null)
             {
-                var content = await File.ReadAllTextAsync(RepositoryPath);
-                var source = JsonConvert.DeserializeObject<IEnumerable<T>>(content);
+                IEnumerable<T> source = null;
+                if (File.Exists(RepositoryPath))
+                {
+                    var content = await File.ReadAllTextAsync(RepositoryPath);
+                    source = JsonConvert.DeserializeObject<IEnumerable<T>>(content, _serializationSettings);
+                }
 
-                _elements = new ObservableCollection<T>(source);
+                _elements = new ObservableCollection<T>(source ?? EmptyArray);
                 _elements.CollectionChanged += Elements_CollectionChanged;
                 IsSaved = true;
             }
-        }
-
-        public async ValueTask DisposeAsync()
-        {
-            if (!IsSaved)
-            {
-                await SaveAsync();
-            }
-
-            _elements = null;
-            await _writer.DisposeAsync();
         }
 
         public async Task<T> GetAsync(Guid guid)
@@ -68,18 +64,48 @@ namespace FireVape.Data
         public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null)
         {
             await Load();
-            return _elements.Where(predicate?.Compile());
+
+            IEnumerable<T> result;
+            if (predicate == null)
+            {
+                result = _elements.AsEnumerable();
+            }
+            else
+            {
+                result = _elements.Where(predicate.Compile());
+            }
+            return result;
         }
 
         public async Task<T> GetOneAsync(Expression<Func<T, bool>> predicate = null)
         {
             await Load();
-            return _elements.FirstOrDefault(predicate?.Compile());
+
+            T result;
+            if (predicate == null)
+            {
+                result = _elements.FirstOrDefault();
+            }
+            else
+            {
+                result = _elements.FirstOrDefault(predicate?.Compile());
+            }
+            return result;
         }
 
         public async Task<int> GetCountAsync(Expression<Func<T, bool>> predicate = null)
         {
             await Load();
+
+            int result;
+            if (predicate == null)
+            {
+                result = _elements.Count();
+            }
+            else
+            {
+                result = _elements.Count(predicate?.Compile());
+            }
             return _elements.Count(predicate?.Compile());
         }
 
@@ -124,8 +150,11 @@ namespace FireVape.Data
 
         public async Task SaveAsync()
         {
-            var content = JsonConvert.SerializeObject(_elements);
-            await _writer.WriteAsync(content);
+            var content = JsonConvert.SerializeObject(_elements, _serializationSettings);
+
+            using var writer = new StreamWriter(RepositoryPath, false);
+            await writer.WriteAsync(content);
+
             IsSaved = true;
         }
 
@@ -138,21 +167,17 @@ namespace FireVape.Data
             }
         }
 
-        private void Elements_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        public async ValueTask DisposeAsync()
         {
-            if (e.OldItems != null)
+            if (!IsSaved)
             {
-                foreach (INotifyPropertyChanged item in e.OldItems)
-                    item.PropertyChanged -= Item_PropertyChanged;
+                await SaveAsync();
             }
-            if (e.NewItems != null)
-            {
-                foreach (INotifyPropertyChanged item in e.NewItems)
-                    item.PropertyChanged += Item_PropertyChanged;
-            }
+
+            _elements = null;
         }
 
-        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Elements_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             IsSaved = false;
         }

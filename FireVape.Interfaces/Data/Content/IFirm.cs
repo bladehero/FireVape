@@ -1,5 +1,8 @@
-﻿namespace FireVape.Interfaces.Data.Content
+﻿using System.ComponentModel;
+
+namespace FireVape.Interfaces.Data.Content
 {
+    [Description("Firms")]
     public interface IFirm : IEntity
     {
         string Name { get; set; }

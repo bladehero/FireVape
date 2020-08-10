@@ -1,9 +1,11 @@
 ﻿using FireVape.Interfaces.Data.Content.Components;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace FireVape.Interfaces.Data.Client
 {
+    [Description("Orders")]
     public interface IOrder : IPricableCostable, IEntity
     {
         DateTime DateCreated { get; set; }

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FireVape.Data.ClientModel
 {
-    public class Order : IOrder
+    public class Order : Entity, IOrder
     {
         public DateTime DateCreated { get; set; }
         public DateTime DateCompleted { get; set; }

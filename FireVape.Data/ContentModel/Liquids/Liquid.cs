@@ -4,7 +4,7 @@ using FireVape.Interfaces.Data.Content.Products;
 
 namespace FireVape.Data.ContentModel.Liquids
 {
-    public class Liquid : ILiquid
+    public class Liquid : Entity, ILiquid
     {
         public IProductOption<IVolumeable> ProductOption { get; set; }
         public string Name { get; set; }

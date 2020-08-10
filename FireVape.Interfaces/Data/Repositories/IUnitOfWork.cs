@@ -3,10 +3,12 @@ using FireVape.Interfaces.Data.Content;
 using FireVape.Interfaces.Data.Content.Components;
 using FireVape.Interfaces.Data.Content.Liquids;
 using FireVape.Interfaces.Data.Content.Products;
+using System;
+using System.Threading.Tasks;
 
 namespace FireVape.Interfaces.Data.Repositories
 {
-    public interface IUnitOfWork
+    public interface IUnitOfWork : IAsyncDisposable, IAsyncSaveable
     {
         IRepository<IFirm> Firms { get; }
         IRepository<IComponent> Components { get; }
@@ -20,5 +22,7 @@ namespace FireVape.Interfaces.Data.Repositories
         IRepository<IClient> Clients { get; }
         IRepository<IOrder> Orders { get; }
         IRepository<IOrderStatus> OrderStatuses { get; }
+
+        Task SaveAsync();
     }
 }

@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="FireVape.WPF.Views.ExitModalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FireVape.WPF.Views"
+             mc:Ignorable="d" 
+             Width="430" Height="200" Background="White">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- Row 1 -->
+        <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+            Сохранить изменения перед выходом?
+        </TextBlock>
+        
+        <!-- Row 2 -->
+        <Button Grid.Row="2" Grid.Column="2"
+                VerticalAlignment="Center" Content="Нет"
+                Margin="7,0" x:Name="NoButton"/>
+        <Button Grid.Row="2" Grid.Column="3"
+                VerticalAlignment="Center" Content="Да"
+                Margin="7,0" x:Name="YesButton"/>
+
+    </Grid>
+</UserControl>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FireVape.Data.ContentModel.Products
 {
-    public class ProductLine : IProductLine<IVolumeable>
+    public class ProductLine : Entity, IProductLine<IVolumeable>
     {
         public string Name { get; set; }
         public IList<IProductOption<IVolumeable>> Options { get; set; }

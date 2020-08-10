@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FireVape.Interfaces.Data.Repositories
 {
-    public interface IRepository<T> : IAsyncEnumerable<T>, IAsyncDisposable where T : class, IEntity
+    public interface IRepository<T> : IAsyncEnumerable<T>, IAsyncDisposable, IAsyncSaveable where T : class, IEntity
     {
         Task<T> GetAsync(Guid guid);
         Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null);
@@ -14,7 +14,5 @@ namespace FireVape.Interfaces.Data.Repositories
         Task InsertAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(Guid guid);
-
-        Task SaveAsync();
     }
 }

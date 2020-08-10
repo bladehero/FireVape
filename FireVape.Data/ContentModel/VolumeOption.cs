@@ -2,7 +2,7 @@
 
 namespace FireVape.Data.ContentModel
 {
-    public class VolumeOption : IVolumeable
+    public class VolumeOption : Entity, IVolumeable
     {
         public int Volume { get; set; }
         public string Unit { get; set; }

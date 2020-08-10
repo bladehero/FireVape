@@ -1,4 +1,6 @@
-﻿namespace FireVape.Interfaces.Data.Content
+﻿using System.ComponentModel;
+
+namespace FireVape.Interfaces.Data.Content
 {
     public interface IVolumeable : IEntity
     {

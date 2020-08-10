@@ -2,7 +2,7 @@
 
 namespace FireVape.Data.ContentModel
 {
-    public class Firm : IFirm
+    public class Firm : Entity, IFirm
     {
         public string Name { get; set; }
         public string Country { get; set; }

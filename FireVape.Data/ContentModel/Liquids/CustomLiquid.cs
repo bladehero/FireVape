@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace FireVape.Data.ContentModel.Liquids
 {
-    public class CustomLiquid : ICustomLiquid
+    public class CustomLiquid : Entity, ICustomLiquid
     {
         public IList<IComponent> Components { get; set; }
         public IProductOption<IVolumeable> ProductOption { get; set; }

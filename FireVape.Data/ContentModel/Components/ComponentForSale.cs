@@ -3,7 +3,7 @@ using FireVape.Interfaces.Data.Content.Components;
 
 namespace FireVape.Data.ContentModel.Components
 {
-    public class ComponentForSale : IComponentForSale
+    public class ComponentForSale : Entity, IComponentForSale
     {
         public string Name { get; set; }
         public IFirm Firm { get; set; }

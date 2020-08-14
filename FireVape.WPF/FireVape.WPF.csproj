@@ -7,16 +7,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FireVape.Data\FireVape.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\" />
+    <ProjectReference Include="..\FireVape.Services\FireVape.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="3.2.0" />
     <PackageReference Include="Caliburn.Micro.Core" Version="3.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\GlobalResources.Designer.cs">
+      <DependentUpon>GlobalResources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\GlobalResources.resx">
+      <LastGenOutput>GlobalResources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

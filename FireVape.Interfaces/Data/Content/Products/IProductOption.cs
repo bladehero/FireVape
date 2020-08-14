@@ -7,6 +7,6 @@ namespace FireVape.Interfaces.Data.Content.Products
     {
         IProductLine<T> ProductLine { get; set; }
         T Value { get; set; }
-        decimal Price { get; }
+        decimal Price { get; set; }
     }
 }

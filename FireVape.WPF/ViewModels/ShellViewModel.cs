@@ -1,41 +1,52 @@
 ﻿using Caliburn.Micro;
+using FireVape.Interfaces;
 using FireVape.Interfaces.Data.Repositories;
-using System.Security.RightsManagement;
+using FireVape.WPF.ViewModels.BaseViewModels;
 
 namespace FireVape.WPF.ViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : BaseUnitViewModel
     {
-        private readonly IWindowManager _windowManager;
-        private readonly IUnitOfWork _unitOfWork;
-
-        public ShellViewModel(IWindowManager windowManager, IUnitOfWork unitOfWork)
+        public ShellViewModel(IUnitOfWork unitOfWork,
+                              IResourceService resourceService,
+                              IWindowManager windowManager)
+            : base(unitOfWork, resourceService, windowManager)
         {
-            _windowManager = windowManager;
-            _unitOfWork = unitOfWork;
         }
 
         public async void SaveMenu()
         {
-            await _unitOfWork.SaveAsync();
+            await UnitOfWork.SaveAsync();
         }
 
         public async void ExitMenu()
         {
-            if (!_unitOfWork.IsSaved)
+            Modal_ConfirmationViewModel modal;
+            if (!UnitOfWork.IsSaved)
             {
-                var result = _windowManager.ShowDialog(new ExitModalViewModel());
-                if (result.GetValueOrDefault())
+                modal = new Modal_ConfirmationViewModel(ResourceService.SaveBeforeExitMessage) { NoIsVisible = true };
+                WindowManager.ShowDialog(modal);
+                if (!modal.Result.HasValue)
                 {
-                    await _unitOfWork.DisposeAsync();
+                    return;
+                }
+                else if (modal.Result.Value)
+                {
+                    await UnitOfWork.DisposeAsync();
                 }
             }
-            TryClose();
+
+            modal = new Modal_ConfirmationViewModel(ResourceService.ExitMessage);
+            WindowManager.ShowDialog(modal);
+            if (modal.Result.GetValueOrDefault())
+            {
+                TryClose();
+            }
         }
 
         public void FirmsMenu()
         {
-            ActivateItem(new FirmsViewModel());
+            ActivateItem(new FirmsViewModel(UnitOfWork, ResourceService, WindowManager));
         }
 
         public void ProductLinesMenu()
@@ -55,7 +66,7 @@ namespace FireVape.WPF.ViewModels
 
         public void ComponentsMenu()
         {
-            ActivateItem(null);
+            ActivateItem(new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager));
         }
 
         public void ComponentsForSaleMenu()

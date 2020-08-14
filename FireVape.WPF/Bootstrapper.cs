@@ -1,8 +1,9 @@
 ﻿using Caliburn.Micro;
-using FireVape.Data;
-using FireVape.Data.ClientModel;
-using FireVape.Interfaces.Data.Client;
+using FireVape.Interfaces;
 using FireVape.Interfaces.Data.Repositories;
+using FireVape.Services;
+using FireVape.Services.Data;
+using FireVape.WPF.Resources;
 using FireVape.WPF.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,12 @@ namespace FireVape.WPF
 
         protected override void Configure()
         {
+            _container.Instance(GlobalResources.ResourceManager);
+
             _container.Singleton<IWindowManager, WindowManager>();
             _container.Singleton<IEventAggregator, EventAggregator>();
+            _container.Singleton<IResourceService, ResourceService>();
+
             _container.PerRequest<IUnitOfWork, UnitOfWork>();
             _container.PerRequest<ShellViewModel, ShellViewModel>();
         }

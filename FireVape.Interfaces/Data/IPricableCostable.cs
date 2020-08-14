@@ -2,5 +2,6 @@
 {
     public interface IPricableCostable : IPricable, ICostable
     {
+        decimal Income { get; }
     }
 }

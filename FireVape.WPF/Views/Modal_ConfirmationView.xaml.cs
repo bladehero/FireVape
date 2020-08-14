@@ -3,11 +3,11 @@
 namespace FireVape.WPF.Views
 {
     /// <summary>
-    /// Interaction logic for ShellView.xaml
+    /// Interaction logic for Modal_ConfirmationView.xaml
     /// </summary>
-    public partial class ShellView : Window
+    public partial class Modal_ConfirmationView : Window
     {
-        public ShellView()
+        public Modal_ConfirmationView()
         {
             InitializeComponent();
         }

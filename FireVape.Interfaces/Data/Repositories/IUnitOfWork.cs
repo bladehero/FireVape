@@ -4,7 +4,7 @@ using FireVape.Interfaces.Data.Content.Components;
 using FireVape.Interfaces.Data.Content.Liquids;
 using FireVape.Interfaces.Data.Content.Products;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace FireVape.Interfaces.Data.Repositories
 {
@@ -23,6 +23,6 @@ namespace FireVape.Interfaces.Data.Repositories
         IRepository<IOrder> Orders { get; }
         IRepository<IOrderStatus> OrderStatuses { get; }
 
-        Task SaveAsync();
+        IEnumerable<IRepository<IEntity>> GetRepositories();
     }
 }

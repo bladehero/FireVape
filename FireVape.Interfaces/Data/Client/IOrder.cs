@@ -8,7 +8,6 @@ namespace FireVape.Interfaces.Data.Client
     [Description("Orders")]
     public interface IOrder : IPricableCostable, IEntity
     {
-        DateTime DateCreated { get; set; }
         DateTime DateCompleted { get; set; }
         string Comment { get; set; }
         IClient Client { get; set; }

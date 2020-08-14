@@ -7,5 +7,6 @@ namespace FireVape.Interfaces.Data.Content
     {
         string Name { get; set; }
         string Country { get; set; }
+        string FullName { get; }
     }
 }

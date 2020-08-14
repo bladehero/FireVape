@@ -4,7 +4,7 @@ using FireVape.Interfaces.Data.Repositories;
 
 namespace FireVape.WPF.ViewModels.BaseViewModels
 {
-    public class BaseUnitViewModel : Conductor<object>
+    public abstract class BaseUnitViewModel : Conductor<object>
     {
         protected IUnitOfWork UnitOfWork { get; private set; }
         protected IResourceService ResourceService { get; private set; }

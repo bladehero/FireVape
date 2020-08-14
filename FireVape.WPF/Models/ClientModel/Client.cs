@@ -25,5 +25,7 @@ namespace FireVape.WPF.Models.ClientModel
                 OnPropertyChanged(() => Phone);
             }
         }
+        public string FullName => $"{Name} {Phone}";
+
     }
 }

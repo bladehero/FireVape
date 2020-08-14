@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -17,7 +16,7 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
     /// </summary>
     /// <typeparam name="T">Type of stored entity</typeparam>
     /// <typeparam name="M">Type of modal to create or update entity</typeparam>
-    public abstract class CrudViewModel<T, M> : BaseUnitViewModel
+    public abstract class CrudViewModel<T, M> : BaseUnitViewModel, IAsyncSaveable
         where T : class, IEntity
         where M : MergeModal<T>, new()
     {
@@ -77,6 +76,8 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
         public bool CanDelete => Selected?.Count > 0;
         public bool CanUpdate => Selected?.Count > 0;
         public bool CanSave => !Repository.IsSaved;
+
+        public bool IsSaved { get; }
         #endregion
 
         #region Actions
@@ -111,7 +112,8 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
                 Elements.Add(modal.Element);
             }
         }
-        public async virtual void Save()
+        public async virtual void Save() => await SaveAsync();
+        public async Task SaveAsync()
         {
             await UnitOfWork.SaveAsync();
             NotifyOfPropertyChange(() => CanSave);

@@ -2,6 +2,10 @@
 using FireVape.Interfaces;
 using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.ViewModels.BaseViewModels;
+using FireVape.WPF.Views;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FireVape.WPF.ViewModels
 {
@@ -12,11 +16,31 @@ namespace FireVape.WPF.ViewModels
                               IWindowManager windowManager)
             : base(unitOfWork, resourceService, windowManager)
         {
+            _viewModels = new List<BaseUnitViewModel>
+            {
+                new FirmsViewModel(UnitOfWork, ResourceService, WindowManager),
+                new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager),
+                new ClientsViewModel(UnitOfWork, ResourceService, WindowManager),
+            };
         }
+
+        private List<BaseUnitViewModel> _viewModels;
+
+        public BaseUnitViewModel GetViewModel<T>() where T : BaseUnitViewModel, IAsyncSaveable
+            => _viewModels.FirstOrDefault(x => x is T);
 
         public async void SaveMenu()
         {
             await UnitOfWork.SaveAsync();
+            var tasks = new List<Task>(_viewModels.Count);
+            foreach (var viewModel in _viewModels)
+            {
+                if (viewModel is IAsyncSaveable saveable)
+                {
+                    tasks.Add(saveable.SaveAsync());
+                }
+            }
+            await Task.WhenAll(tasks);
         }
 
         public async void ExitMenu()
@@ -46,7 +70,8 @@ namespace FireVape.WPF.ViewModels
 
         public void FirmsMenu()
         {
-            ActivateItem(new FirmsViewModel(UnitOfWork, ResourceService, WindowManager));
+            var vm = GetViewModel<FirmsViewModel>();
+            ActivateItem(vm);
         }
 
         public void ProductLinesMenu()
@@ -66,7 +91,8 @@ namespace FireVape.WPF.ViewModels
 
         public void ComponentsMenu()
         {
-            ActivateItem(new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager));
+            var vm = GetViewModel<ComponentsViewModel>();
+            ActivateItem(vm);
         }
 
         public void ComponentsForSaleMenu()
@@ -76,7 +102,8 @@ namespace FireVape.WPF.ViewModels
 
         public void ClientsMenu()
         {
-            ActivateItem(null);
+            var vm = GetViewModel<ClientsViewModel>();
+            ActivateItem(vm);
         }
 
         public void OrdersMenu()

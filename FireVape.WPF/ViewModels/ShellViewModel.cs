@@ -3,6 +3,7 @@ using FireVape.Interfaces;
 using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.ViewModels.BaseViewModels;
 using FireVape.WPF.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,13 +22,15 @@ namespace FireVape.WPF.ViewModels
                 new FirmsViewModel(UnitOfWork, ResourceService, WindowManager),
                 new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager),
                 new ClientsViewModel(UnitOfWork, ResourceService, WindowManager),
+                new OrderStatusesViewModel(UnitOfWork, ResourceService, WindowManager),
             };
         }
 
         private List<BaseUnitViewModel> _viewModels;
 
         public BaseUnitViewModel GetViewModel<T>() where T : BaseUnitViewModel, IAsyncSaveable
-            => _viewModels.FirstOrDefault(x => x is T);
+            => _viewModels.FirstOrDefault(x => x is T) 
+            ?? throw new TypeLoadException($"Type of `{typeof(T)}` is not provided to stack of View Models!");
 
         public async void SaveMenu()
         {
@@ -118,7 +121,8 @@ namespace FireVape.WPF.ViewModels
 
         public void OrderStatusesMenu()
         {
-            ActivateItem(null);
+            var vm = GetViewModel<OrderStatusesViewModel>();
+            ActivateItem(vm);
         }
 
         public void SettingsMenu()

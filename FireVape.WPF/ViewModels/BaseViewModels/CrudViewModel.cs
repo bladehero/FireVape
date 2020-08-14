@@ -16,18 +16,19 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
     /// </summary>
     /// <typeparam name="T">Type of stored entity</typeparam>
     /// <typeparam name="M">Type of modal to create or update entity</typeparam>
-    public abstract class CrudViewModel<T, M> : BaseUnitViewModel 
+    public abstract class CrudViewModel<T, M> : BaseUnitViewModel
         where T : class, IEntity
         where M : MergeModal<T>, new()
     {
-        protected abstract IRepository<T> Repository { get; }
+        private BindableCollection<T> _elements;
 
         public CrudViewModel(IUnitOfWork unitOfWork,
                              IResourceService resourceService,
-                             IWindowManager windowManager) : 
+                             IWindowManager windowManager) :
             base(unitOfWork, resourceService, windowManager)
         {
 
+            Selected = new List<T>();
             Task.Run(async () =>
             {
                 var elements = await Repository.GetAllAsync();
@@ -40,9 +41,6 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
             });
         }
 
-
-        private BindableCollection<T> _elements;
-
         public BindableCollection<T> Elements
         {
             get => _elements;
@@ -53,14 +51,19 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
             }
         }
 
-        public List<T> Selected { get; private set; } = new List<T>();
+        #region Getters
+        protected abstract IRepository<T> Repository { get; }
+        public List<T> Selected { get; }
+        public virtual string ElementsNaming => ResourceService.ElementsNaming;
+        #endregion
 
+        #region Enablings
         public bool CanDelete => Selected?.Count > 0;
         public bool CanUpdate => Selected?.Count > 0;
         public bool CanSave => !Repository.IsSaved;
+        #endregion
 
-        public virtual string ElementsNaming => ResourceService.ElementsNaming;
-
+        #region Actions
         public void Delete()
         {
             var modal = new Modal_ConfirmationViewModel(ResourceService.DeleteConfirmation(ElementsNaming));
@@ -76,7 +79,10 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
 
             var modal = new M()
             {
-                Element = element
+                Element = element,
+                UnitOfWork = UnitOfWork,
+                ResourceService = ResourceService,
+                WindowManager = WindowManager
             };
             WindowManager.ShowDialog(modal);
 
@@ -88,7 +94,12 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
         }
         public void Create()
         {
-            var modal = new M();
+            var modal = new M()
+            {
+                UnitOfWork = UnitOfWork,
+                ResourceService = ResourceService,
+                WindowManager = WindowManager
+            };
             WindowManager.ShowDialog(modal);
             if (modal.Result)
             {
@@ -100,7 +111,9 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
             await UnitOfWork.SaveAsync();
             NotifyOfPropertyChange(() => CanSave);
         }
+        #endregion
 
+        #region EventHandlers
         public void SelectedChangeEvent(SelectionChangedEventArgs e)
         {
             foreach (T item in e.AddedItems)
@@ -116,7 +129,6 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
             NotifyOfPropertyChange(() => CanDelete);
             NotifyOfPropertyChange(() => CanUpdate);
         }
-
         private async void Elements_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             var tasks = (IList<Task>)null;
@@ -157,7 +169,6 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
             }
             NotifyOfPropertyChange(() => CanSave);
         }
-
         private async void Item_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (sender is T element)
@@ -166,5 +177,6 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
             }
             NotifyOfPropertyChange(() => CanSave);
         }
+        #endregion
     }
 }

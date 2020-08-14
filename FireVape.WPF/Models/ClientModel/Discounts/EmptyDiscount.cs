@@ -7,6 +7,6 @@ namespace FireVape.WPF.Models.ClientModel.Discounts
 {
     public class EmptyDiscount : IDiscount<IComponentForSale>
     {
-        public decimal Apply(IEnumerable<IComponentForSale> products) => products.Sum(x => x.Price);
+        public decimal Apply(IEnumerable<IComponentForSale> products) => products.Sum(x => x.Price.GetValueOrDefault());
     }
 }

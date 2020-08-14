@@ -5,8 +5,8 @@ namespace FireVape.WPF.Models.ClientModel
     public class Delivery : Entity, IDelivery
     {
         private string where;
-        private decimal price;
-        private decimal cost;
+        private decimal? price;
+        private decimal? cost;
 
         public string Where
         {
@@ -17,7 +17,7 @@ namespace FireVape.WPF.Models.ClientModel
                 OnPropertyChanged(() => Where);
             }
         }
-        public decimal Price
+        public decimal? Price
         {
             get => price;
             set
@@ -26,7 +26,7 @@ namespace FireVape.WPF.Models.ClientModel
                 OnPropertyChanged(() => Price);
             }
         }
-        public decimal Cost
+        public decimal? Cost
         {
             get => cost;
             set
@@ -36,6 +36,6 @@ namespace FireVape.WPF.Models.ClientModel
             }
         }
 
-        public decimal Income => Price - Cost;
+        public decimal? Income => Price.GetValueOrDefault() - Cost.GetValueOrDefault();
     }
 }

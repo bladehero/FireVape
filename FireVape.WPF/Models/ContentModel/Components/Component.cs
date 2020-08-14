@@ -7,7 +7,7 @@ namespace FireVape.WPF.Models.ContentModel.Components
     {
         private string name;
         private IFirm firm;
-        private decimal cost;
+        private decimal? cost;
 
         public string Name
         {
@@ -27,7 +27,7 @@ namespace FireVape.WPF.Models.ContentModel.Components
                 OnPropertyChanged(() => Firm);
             }
         }
-        public decimal Cost
+        public decimal? Cost
         {
             get => cost;
             set

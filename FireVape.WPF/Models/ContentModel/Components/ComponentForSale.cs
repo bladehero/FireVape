@@ -4,9 +4,9 @@ namespace FireVape.WPF.Models.ContentModel.Components
 {
     public class ComponentForSale : Component, IComponentForSale
     {
-        private decimal price;
+        private decimal? price;
 
-        public decimal Price
+        public decimal? Price
         {
             get => price;
             set

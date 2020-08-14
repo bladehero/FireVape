@@ -14,8 +14,8 @@ namespace FireVape.WPF.Models.ClientModel
         private IDiscount<IComponentForSale> discount;
         private IDelivery delivery;
         private IOrderStatus status;
-        private decimal price;
-        private decimal cost;
+        private decimal? price;
+        private decimal? cost;
 
         public DateTime DateCompleted
         {
@@ -80,7 +80,7 @@ namespace FireVape.WPF.Models.ClientModel
                 OnPropertyChanged(() => Status);
             }
         }
-        public decimal Price
+        public decimal? Price
         {
             get => price;
             set
@@ -89,7 +89,7 @@ namespace FireVape.WPF.Models.ClientModel
                 OnPropertyChanged(() => Price);
             }
         }
-        public decimal Cost
+        public decimal? Cost
         {
             get => cost;
             set
@@ -99,6 +99,6 @@ namespace FireVape.WPF.Models.ClientModel
             }
         }
 
-        public decimal Income => Price - Cost;
+        public decimal? Income => Price - Cost;
     }
 }

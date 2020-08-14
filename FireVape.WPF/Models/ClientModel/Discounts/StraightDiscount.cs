@@ -25,7 +25,7 @@ namespace FireVape.WPF.Models.ClientModel.Discounts
 
         public decimal Apply(IEnumerable<IComponentForSale> products)
         {
-            var sum = products.Sum(x => x.Price);
+            var sum = products.Sum(x => x.Price.GetValueOrDefault());
             return sum > Value ? sum - Value : byte.MinValue;
         }
     }

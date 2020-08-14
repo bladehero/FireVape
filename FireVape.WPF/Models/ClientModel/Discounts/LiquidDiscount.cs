@@ -46,7 +46,7 @@ namespace FireVape.WPF.Models.ClientModel.Discounts
 
             freeLiquids.ForEach(x => { x.Price = 0; });
 
-            return liquids.Sum(x => x.Price);
+            return liquids.Sum(x => x.Price.GetValueOrDefault());
         }
     }
 }

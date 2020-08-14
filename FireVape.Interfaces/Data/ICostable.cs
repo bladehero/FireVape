@@ -2,6 +2,6 @@
 {
     public interface ICostable
     {
-        decimal Cost { get; set; }
+        decimal? Cost { get; set; }
     }
 }

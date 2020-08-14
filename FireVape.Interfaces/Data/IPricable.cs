@@ -2,6 +2,6 @@
 {
     public interface IPricable
     {
-        decimal Price { get; set; }
+        decimal? Price { get; set; }
     }
 }

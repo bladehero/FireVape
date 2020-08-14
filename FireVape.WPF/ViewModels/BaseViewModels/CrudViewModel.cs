@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
@@ -52,6 +53,21 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
         }
 
         #region Getters
+        public virtual async Task<M> GetModalAsync()
+        {
+            return new M()
+            {
+                UnitOfWork = UnitOfWork,
+                ResourceService = ResourceService,
+                WindowManager = WindowManager
+            };
+        }
+        public virtual async Task<M> GetModalAsync(T element)
+        {
+            var modal = await GetModalAsync();
+            modal.Element = element;
+            return modal;
+        }
         protected abstract IRepository<T> Repository { get; }
         public List<T> Selected { get; }
         public virtual string ElementsNaming => ResourceService.ElementsNaming;
@@ -64,7 +80,7 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
         #endregion
 
         #region Actions
-        public void Delete()
+        public virtual void Delete()
         {
             var modal = new Modal_ConfirmationViewModel(ResourceService.DeleteConfirmation(ElementsNaming));
             WindowManager.ShowDialog(modal);
@@ -73,17 +89,11 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
                 Elements.RemoveRange(Selected);
             }
         }
-        public void Update()
+        public virtual async void Update()
         {
             var element = Selected.FirstOrDefault();
 
-            var modal = new M()
-            {
-                Element = element,
-                UnitOfWork = UnitOfWork,
-                ResourceService = ResourceService,
-                WindowManager = WindowManager
-            };
+            var modal = await GetModalAsync(element);
             WindowManager.ShowDialog(modal);
 
             if (modal.Result)
@@ -92,21 +102,16 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
                 Elements[index] = modal.Element;
             }
         }
-        public void Create()
+        public virtual async void Create()
         {
-            var modal = new M()
-            {
-                UnitOfWork = UnitOfWork,
-                ResourceService = ResourceService,
-                WindowManager = WindowManager
-            };
+            var modal = await GetModalAsync();
             WindowManager.ShowDialog(modal);
             if (modal.Result)
             {
                 Elements.Add(modal.Element);
             }
         }
-        public async void Save()
+        public async virtual void Save()
         {
             await UnitOfWork.SaveAsync();
             NotifyOfPropertyChange(() => CanSave);

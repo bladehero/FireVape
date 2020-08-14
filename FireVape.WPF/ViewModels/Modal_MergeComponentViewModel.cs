@@ -5,24 +5,16 @@ using FireVape.WPF.Models.ContentModel.Components;
 using FireVape.WPF.ViewModels.BaseViewModels;
 using System;
 using System.Globalization;
-using System.Threading.Tasks;
 
 namespace FireVape.WPF.ViewModels
 {
     public class Modal_MergeComponentViewModel : MergeModal<IComponent>
     {
-        public Modal_MergeComponentViewModel()
-        {
-            Element = new Component();
-            Task.Run(async () =>
-            {
-                var firms = await UnitOfWork.Firms.GetAllAsync();
-                Firms = new BindableCollection<IFirm>(firms);
-                NotifyOfPropertyChange(() => Firms);
-            });
-        }
+        public Modal_MergeComponentViewModel() => Element = new Component();
 
         private string costString;
+        private BindableCollection<IFirm> firms;
+
         public string CostString
         {
             get => costString;
@@ -30,7 +22,11 @@ namespace FireVape.WPF.ViewModels
             {
                 try
                 {
-                    var cost = decimal.Parse(value, NumberStyles.Float, CultureInfo.InvariantCulture);
+                    var cost = (decimal?)0;
+                    if (!string.IsNullOrWhiteSpace(value))
+                    {
+                        cost = decimal.Parse(value, NumberStyles.Float, CultureInfo.InvariantCulture);
+                    }
                     costString = value;
                     Element.Cost = cost;
                 }
@@ -38,9 +34,30 @@ namespace FireVape.WPF.ViewModels
                 {
                     System.Media.SystemSounds.Beep.Play();
                 }
+                NotifyOfPropertyChange(() => CostString);
             }
         }
 
-        public BindableCollection<IFirm> Firms { get; set; }
+        public override IComponent Element
+        {
+            get => base.Element;
+            set
+            {
+                base.Element = value;
+                costString = value.Cost?.ToString();
+
+                NotifyOfPropertyChange(() => CostString);
+            }
+        }
+
+        public BindableCollection<IFirm> Firms
+        {
+            get => firms;
+            set
+            {
+                firms = value;
+                NotifyOfPropertyChange(() => Firms);
+            }
+        }
     }
 }

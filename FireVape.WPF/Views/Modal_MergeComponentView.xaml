@@ -41,7 +41,7 @@
                    Text="Фирма"/>
         <ComboBox Grid.Row="2" Grid.Column="2"
                   Margin="7,5"
-                  SelectedItem="{Binding Path=Element.Firm, Mode=OneWayToSource}"
+                  SelectedItem="{Binding Path=Element.Firm}"
                   DisplayMemberPath="FullName"
                   x:Name="Firms"/>
 

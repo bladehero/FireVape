@@ -3,6 +3,8 @@ using FireVape.Interfaces;
 using FireVape.Interfaces.Data.Content.Components;
 using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.ViewModels.BaseViewModels;
+using System.Threading.Tasks;
+using FireVape.WPF.Helpers;
 
 namespace FireVape.WPF.ViewModels
 {
@@ -16,5 +18,12 @@ namespace FireVape.WPF.ViewModels
         }
 
         protected override IRepository<IComponent> Repository => UnitOfWork.Components;
+
+        public override async Task<Modal_MergeComponentViewModel> GetModalAsync()
+        {
+            var modal = await base.GetModalAsync();
+            modal.Firms = await UnitOfWork.Firms.GetAllAsync().AsBindableAsync();
+            return modal;
+        }
     }
 }

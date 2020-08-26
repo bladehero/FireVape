@@ -52,19 +52,18 @@ namespace FireVape.WPF.ViewModels.BaseViewModels
         }
 
         #region Getters
-        public virtual async Task<M> GetModalAsync()
+        public virtual async Task<M> GetModalAsync(T element = null)
         {
-            return new M()
+            var modal = new M()
             {
                 UnitOfWork = UnitOfWork,
                 ResourceService = ResourceService,
                 WindowManager = WindowManager
             };
-        }
-        public virtual async Task<M> GetModalAsync(T element)
-        {
-            var modal = await GetModalAsync();
-            modal.Element = element;
+            if (element != null)
+            {
+                modal.Element = element;
+            }
             return modal;
         }
         protected abstract IRepository<T> Repository { get; }

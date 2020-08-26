@@ -10,9 +10,7 @@ namespace FireVape.WPF.Models.ContentModel.Liquids
         private string name;
         private IFirm firm;
         private decimal? cost;
-        private int volume;
         private decimal? price;
-        private string unit;
 
         public IProductOption<IVolumeable> ProductOption
         {
@@ -41,23 +39,13 @@ namespace FireVape.WPF.Models.ContentModel.Liquids
                 OnPropertyChanged(() => Firm);
             }
         }
-        public decimal? Cost
+        public virtual decimal? Cost
         {
             get => cost;
             set
             {
                 cost = value;
                 OnPropertyChanged(() => Cost);
-            }
-        }
-        public int Volume
-        {
-            get => volume;
-            set
-            {
-                volume = value;
-                OnPropertyChanged(() => Volume);
-                OnPropertyChanged(() => VolumeUnit);
             }
         }
         public decimal? Price
@@ -69,17 +57,10 @@ namespace FireVape.WPF.Models.ContentModel.Liquids
                 OnPropertyChanged(() => Price);
             }
         }
-        public string Unit
-        {
-            get => unit;
-            set
-            {
-                unit = value;
-                OnPropertyChanged(() => Unit);
-                OnPropertyChanged(() => VolumeUnit);
-            }
-        }
 
-        public string VolumeUnit => $"{Volume} {Unit}";
+        public decimal? Income =>
+            Price.HasValue && Cost.HasValue
+            ? (decimal?)(Price.Value - Cost.Value)
+            : null;
     }
 }

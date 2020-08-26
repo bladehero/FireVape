@@ -28,8 +28,6 @@ namespace FireVape.Services.Data
         public IRepository<IFirm> Firms { get; } = new Repository<IFirm>();
         public IRepository<IComponent> Components { get; } = new Repository<IComponent>();
         public IRepository<IComponentForSale> ComponentForSales { get; } = new Repository<IComponentForSale>();
-        public IRepository<IVolumeableComponent> VolumeableComponents { get; } = new Repository<IVolumeableComponent>();
-        public IRepository<IVolumeableComponentForSale> VolumeableComponentForSales { get; } = new Repository<IVolumeableComponentForSale>();
         public IRepository<IProductLine<IVolumeable>> ProductLines { get; } = new Repository<IProductLine<IVolumeable>>();
         public IRepository<IProductOption<IVolumeable>> ProductOptions { get; } = new Repository<IProductOption<IVolumeable>>();
         public IRepository<ILiquid> Liquids { get; } = new Repository<ILiquid>();

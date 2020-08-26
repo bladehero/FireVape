@@ -13,6 +13,8 @@ namespace FireVape.WPF.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public override int GetHashCode() => Guid.GetHashCode();
+
         public object Clone() => MemberwiseClone();
 
         protected virtual void OnPropertyChanged(string propertyName)

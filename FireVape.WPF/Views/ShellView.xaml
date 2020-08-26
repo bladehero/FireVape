@@ -38,8 +38,10 @@
                     <MenuItem Header="Рецепты" x:Name="CustomLiquidsMenu"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Компоненты">
-                    <MenuItem Header="Мои компоненты" x:Name="ComponentsMenu"></MenuItem>
-                    <MenuItem Header="На продажу" x:Name="ComponentsForSaleMenu"></MenuItem>
+                    <MenuItem Header="Мои компоненты">
+                        <MenuItem Header="Внутренние" x:Name="ComponentsMenu"></MenuItem>
+                        <MenuItem Header="На продажу" x:Name="ComponentsForSaleMenu"></MenuItem>
+                    </MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Клиенты" x:Name="ClientsMenu"></MenuItem>

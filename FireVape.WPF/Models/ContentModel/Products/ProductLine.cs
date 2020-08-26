@@ -25,6 +25,13 @@ namespace FireVape.WPF.Models.ContentModel.Products
             {
                 options = value;
                 OnPropertyChanged(() => Options);
+                if (options?.Count > 0)
+                {
+                    foreach (var option in options)
+                    {
+                        option.PropertyChanged += (o, e) => OnPropertyChanged(() => Options);
+                    }
+                }
             }
         }
     }

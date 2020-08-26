@@ -13,8 +13,6 @@ namespace FireVape.Interfaces.Data.Repositories
         IRepository<IFirm> Firms { get; }
         IRepository<IComponent> Components { get; }
         IRepository<IComponentForSale> ComponentForSales { get; }
-        IRepository<IVolumeableComponent> VolumeableComponents { get; }
-        IRepository<IVolumeableComponentForSale> VolumeableComponentForSales { get; }
         IRepository<IProductLine<IVolumeable>> ProductLines { get; }
         IRepository<IProductOption<IVolumeable>> ProductOptions { get; }
         IRepository<ILiquid> Liquids { get; }

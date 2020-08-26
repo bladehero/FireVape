@@ -5,7 +5,7 @@ using System.ComponentModel;
 namespace FireVape.Interfaces.Data.Content.Liquids
 {
     [Description("Liquids")]
-    public interface ILiquid : IVolumeableComponentForSale, IEntity
+    public interface ILiquid : IComponentForSale, IEntity
     {
         IProductOption<IVolumeable> ProductOption { get; set; }
     }

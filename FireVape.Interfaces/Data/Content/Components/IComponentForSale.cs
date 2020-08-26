@@ -3,7 +3,7 @@
 namespace FireVape.Interfaces.Data.Content.Components
 {
     [Description("ComponentForSales")]
-    public interface IComponentForSale : IComponent, IPricable
+    public interface IComponentForSale : IComponent, IPricableCostable
     {
     }
 }

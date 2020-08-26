@@ -27,7 +27,7 @@ namespace FireVape.WPF.Models.ContentModel.Components
                 OnPropertyChanged(() => Firm);
             }
         }
-        public decimal? Cost
+        public virtual decimal? Cost
         {
             get => cost;
             set

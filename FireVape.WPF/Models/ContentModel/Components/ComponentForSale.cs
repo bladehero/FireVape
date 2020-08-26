@@ -6,6 +6,16 @@ namespace FireVape.WPF.Models.ContentModel.Components
     {
         private decimal? price;
 
+        public override decimal? Cost 
+        { 
+            get => base.Cost;
+            set
+            {
+                base.Cost = value;
+                OnPropertyChanged(() => Income);
+            }
+        }
+
         public decimal? Price
         {
             get => price;
@@ -13,7 +23,13 @@ namespace FireVape.WPF.Models.ContentModel.Components
             {
                 price = value;
                 OnPropertyChanged(() => Price);
+                OnPropertyChanged(() => Income);
             }
         }
+
+        public decimal? Income => 
+            Price.HasValue && Cost.HasValue 
+            ? (decimal?)(Price.Value - Cost.Value) 
+            : null;
     }
 }

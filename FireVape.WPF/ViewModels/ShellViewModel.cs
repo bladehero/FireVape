@@ -2,7 +2,6 @@
 using FireVape.Interfaces;
 using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.ViewModels.BaseViewModels;
-using FireVape.WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +20,7 @@ namespace FireVape.WPF.ViewModels
             {
                 new FirmsViewModel(UnitOfWork, ResourceService, WindowManager),
                 new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager),
+                new ComponentsForSaleViewModel(UnitOfWork, ResourceService, WindowManager),
                 new ClientsViewModel(UnitOfWork, ResourceService, WindowManager),
                 new OrderStatusesViewModel(UnitOfWork, ResourceService, WindowManager),
             };
@@ -100,7 +100,8 @@ namespace FireVape.WPF.ViewModels
 
         public void ComponentsForSaleMenu()
         {
-            ActivateItem(null);
+            var vm = GetViewModel<ComponentsForSaleViewModel>();
+            ActivateItem(vm);
         }
 
         public void ClientsMenu()

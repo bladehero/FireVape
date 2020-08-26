@@ -4,6 +4,7 @@ using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.ViewModels.BaseViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace FireVape.WPF.ViewModels
         private List<BaseUnitViewModel> _viewModels;
 
         public BaseUnitViewModel GetViewModel<T>() where T : BaseUnitViewModel, IAsyncSaveable
-            => _viewModels.FirstOrDefault(x => x is T) 
+            => _viewModels.FirstOrDefault(x => x is T)
             ?? throw new TypeLoadException($"Type of `{typeof(T)}` is not provided to stack of View Models!");
 
         public async void SaveMenu()
@@ -44,6 +45,24 @@ namespace FireVape.WPF.ViewModels
                 }
             }
             await Task.WhenAll(tasks);
+        }
+
+        public async void OnClose(CancelEventArgs eventArgs)
+        {
+            Modal_ConfirmationViewModel modal;
+            if (!UnitOfWork.IsSaved)
+            {
+                modal = new Modal_ConfirmationViewModel(ResourceService.SaveBeforeExitMessage)
+                {
+                    NoIsVisible = true,
+                    CancelIsVisible = false
+                };
+                WindowManager.ShowDialog(modal);
+                if (modal.Result.GetValueOrDefault())
+                {
+                    await UnitOfWork.DisposeAsync();
+                }
+            }
         }
 
         public async void ExitMenu()

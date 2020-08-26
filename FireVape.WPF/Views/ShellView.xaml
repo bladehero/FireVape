@@ -4,8 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FireVape.WPF.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="ShellView" Height="400" Width="600" MinHeight="400" MinWidth="600">
+        cal:Message.Attach="[Event Closing] = [Action OnClose($eventArgs)];[Gesture Ctrl+S] = [SaveMenu]"
+        Title="ShellView" Height="400" Width="600" MinHeight="400" MinWidth="600"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>

@@ -33,9 +33,9 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Width="*"
                                     Header="Статус" Binding="{Binding Path=Status}"/>
-                <DataGridTextColumn Width="Auto"
+                <DataGridTextColumn Width="*"
                                     Header="Создано" Binding="{Binding Path=Created}" IsReadOnly="True"/>
-                <DataGridTextColumn Width="Auto"
+                <DataGridTextColumn Width="*"
                                     Header="Изменено" Binding="{Binding Path=Modified}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>

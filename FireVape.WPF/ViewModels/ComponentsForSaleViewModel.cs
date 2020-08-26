@@ -4,7 +4,6 @@ using FireVape.Interfaces.Data.Content.Components;
 using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.Helpers;
 using FireVape.WPF.ViewModels.BaseViewModels;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FireVape.WPF.ViewModels

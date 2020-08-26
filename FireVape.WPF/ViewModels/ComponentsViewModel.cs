@@ -19,10 +19,13 @@ namespace FireVape.WPF.ViewModels
 
         protected override IRepository<IComponent> Repository => UnitOfWork.Components;
 
-        public override async Task<Modal_MergeComponentViewModel> GetModalAsync(IComponent component = null)
+        public override async Task<Modal_MergeComponentViewModel> GetModalAsync(IComponent element = null)
         {
-            var modal = await base.GetModalAsync(component);
-            modal.Firms = await UnitOfWork.Firms.GetAllAsync().AsBindableAsync();
+            var firms = await UnitOfWork.Firms.GetAllAsync().AsBindableAsync();
+            var firm = await UnitOfWork.Firms.GetAsync(element.Firm.Guid);
+            element.Firm = firm;
+            var modal = await base.GetModalAsync(element);
+            modal.Firms = firms;
             return modal;
         }
     }

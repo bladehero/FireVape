@@ -4,6 +4,7 @@ using FireVape.Interfaces.Data.Content.Components;
 using FireVape.Interfaces.Data.Repositories;
 using FireVape.WPF.Helpers;
 using FireVape.WPF.ViewModels.BaseViewModels;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FireVape.WPF.ViewModels
@@ -21,9 +22,11 @@ namespace FireVape.WPF.ViewModels
 
         public override async Task<Modal_MergeComponentForSaleViewModel> GetModalAsync(IComponentForSale element = null)
         {
-            var modal = await base.GetModalAsync();
-            modal.Firms = await UnitOfWork.Firms.GetAllAsync().AsBindableAsync();
-            modal.Element = element;
+            var firms = await UnitOfWork.Firms.GetAllAsync().AsBindableAsync();
+            var firm = await UnitOfWork.Firms.GetAsync(element.Firm.Guid);
+            element.Firm = firm;
+            var modal = await base.GetModalAsync(element);
+            modal.Firms = firms;
             return modal;
         }
     }

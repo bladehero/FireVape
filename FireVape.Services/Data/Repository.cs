@@ -21,7 +21,9 @@ namespace FireVape.Services.Data
         {
             TypeNameHandling = TypeNameHandling.All,
             NullValueHandling = NullValueHandling.Ignore,
+#if DEBUG
             Formatting = Formatting.Indented
+#endif
         };
         private ObservableCollection<T> _elements;
 

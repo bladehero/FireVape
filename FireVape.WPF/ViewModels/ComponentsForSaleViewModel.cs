@@ -22,8 +22,11 @@ namespace FireVape.WPF.ViewModels
         public override async Task<Modal_MergeComponentForSaleViewModel> GetModalAsync(IComponentForSale element = null)
         {
             var firms = await UnitOfWork.Firms.GetAllAsync().AsBindableAsync();
-            var firm = await UnitOfWork.Firms.GetAsync(element.Firm.Guid);
-            element.Firm = firm;
+            if (element != null)
+            {
+                var firm = await UnitOfWork.Firms.GetAsync(element.Firm.Guid);
+                element.Firm = firm;
+            }
             var modal = await base.GetModalAsync(element);
             modal.Firms = firms;
             return modal;

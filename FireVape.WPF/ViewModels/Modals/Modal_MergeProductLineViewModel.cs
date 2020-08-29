@@ -11,13 +11,14 @@ namespace FireVape.WPF.ViewModels
 
         public void Add()
         {
-            var option = new ProductOption();
-            Element.Options.Add(option);
+            Element.Options.Add(new ProductOption());
         }
 
-        public void Delete(IProductOption<IVolumeable> option)
+        public override void TryClose(bool? dialogResult = null)
         {
-            Element.Options.Remove(option);
+            // Reset values to override exception of non-updated values;
+            Element.Options = Element.Options;
+            base.TryClose(dialogResult);
         }
     }
 }

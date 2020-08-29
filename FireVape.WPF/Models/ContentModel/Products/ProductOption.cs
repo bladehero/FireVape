@@ -11,7 +11,9 @@ namespace FireVape.WPF.Models.ContentModel.Products
 
         public ProductOption()
         {
-            value = new VolumeOption();
+            var volumeOption = new VolumeOption();
+            volumeOption.PropertyChanged += (o, e) => OnPropertyChanged(() => Value);
+            value = volumeOption;
         }
 
         public IProductLine<IVolumeable> ProductLine

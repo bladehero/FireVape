@@ -1,4 +1,5 @@
-﻿using FireVape.Interfaces.Data.Content;
+﻿using Caliburn.Micro;
+using FireVape.Interfaces.Data.Content;
 using FireVape.Interfaces.Data.Content.Products;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,11 +12,11 @@ namespace FireVape.WPF.Models.ContentModel.Products
     public class ProductLine : Entity, IProductLine<IVolumeable>
     {
         private string name;
-        private ObservableCollection<IProductOption<IVolumeable>> options;
+        private BindableCollection<IProductOption<IVolumeable>> options;
 
         public ProductLine()
         {
-            Options = new ObservableCollection<IProductOption<IVolumeable>>();
+            Options = new BindableCollection<IProductOption<IVolumeable>>();
         }
 
         public string Name
@@ -32,7 +33,7 @@ namespace FireVape.WPF.Models.ContentModel.Products
             get => options;
             set
             {
-                options = new ObservableCollection<IProductOption<IVolumeable>>(value);
+                options = new BindableCollection<IProductOption<IVolumeable>>(value);
                 OnPropertyChanged(() => Options);
                 OnPropertyChanged(() => StringOptions);
                 if (options != null )
@@ -57,9 +58,6 @@ namespace FireVape.WPF.Models.ContentModel.Products
 
         private void Options_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            OnPropertyChanged(() => Options);
-            OnPropertyChanged(() => StringOptions);
-
             if (e.OldItems != null)
             {
                 foreach (INotifyPropertyChanged item in e.OldItems)
@@ -70,10 +68,12 @@ namespace FireVape.WPF.Models.ContentModel.Products
                 foreach (INotifyPropertyChanged item in e.NewItems)
                     item.PropertyChanged += Option_PropertyChanged;
             }
+            OnPropertyChanged(() => Options);
+            OnPropertyChanged(() => StringOptions);
         }
 
         public string StringOptions => Options?.Count > 0 
-            ? string.Join(", ", Options.Select(x => x.Value)) 
+            ? string.Join(", ", Options.Select(x => $"{x.Value} ({x.Price}₴)")) 
             : "—";
     }
 }

@@ -1,11 +1,6 @@
 ﻿<Window x:Class="FireVape.WPF.Views.Modal_MergeProductLineView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FireVape.WPF.Views"
-        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="Создать статус для заказа"
         Height="350" Width="400"
         ResizeMode="NoResize">
@@ -31,69 +26,36 @@
                    VerticalAlignment="Center"
                    Text="Линейка"/>
         <TextBox Grid.Row="1" Grid.Column="2"
-                 Margin="7,5"
+                 Margin="7,5,0,5"
                  x:Name="Element_Name"/>
         
         <!-- Row 2 -->
         <TextBlock Grid.Row="2" Grid.Column="1"
                    Grid.ColumnSpan="2"
-                   VerticalAlignment="Center"
+                   VerticalAlignment="Bottom"
                    Text="Доступные объемы:"/>
-        <Button Grid.Row="2" Grid.Column="2"
-                HorizontalAlignment="Right"
-                Padding="7,0"
-                Content="Добавить" x:Name="Add"/>
+        <StackPanel Grid.Row="2" Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal">
+            <Button Padding="7,3"
+                    Content="Добавить"
+                    x:Name="Add"/>
+        </StackPanel>
 
         <!-- Row 3 -->
-        <ListView Grid.Row="3" Grid.Column="1"
-                 Grid.ColumnSpan="2"
-                 Margin="7,5"
-                 HorizontalContentAlignment="Stretch"
-                 x:Name="Element_Options">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="5"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="5"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <!-- Row 1 -->
-                        <TextBlock Grid.Row="1" Grid.Column="1"
-                                   Text="Объем"/>
-                        <TextBlock Grid.Row="1" Grid.Column="2"
-                                   Text="Цена"/>
-
-                        <!-- Row 2 -->
-                        <TextBox Grid.Row="2" Grid.Column="1" 
-                                 x:Name="Value_Volume"
-                                 Margin="0,0,3,0"/>
-                        <TextBox Grid.Row="2" Grid.Column="2" 
-                                 x:Name="Price"
-                                 Margin="0,0,3,0"/>
-                        <Button Grid.Row="2" Grid.Column="3" 
-                                Content="Удалить"
-                                Padding="7,0">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="Click">
-                                    <cal:ActionMessage MethodName="Delete">
-                                        <cal:Parameter Value="{Binding}" />
-                                    </cal:ActionMessage>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <DataGrid Grid.Row="3" Grid.Column="1"
+                  Grid.ColumnSpan="2"
+                  Margin="0,7"
+                  x:Name="Element_Options" AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  SelectionMode="Extended">
+            <DataGrid.Columns>
+                <DataGridTextColumn Width="*"
+                                    Header="Объем" Binding="{Binding Path=Value.Volume}"/>
+                <DataGridTextColumn Width="*"
+                                    Header="Цена" Binding="{Binding Path=Price}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         <!-- Row 4 -->
 

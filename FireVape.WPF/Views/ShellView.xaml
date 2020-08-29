@@ -41,10 +41,8 @@
                     <MenuItem Header="Рецепты" x:Name="CustomLiquidsMenu"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Компоненты">
-                    <MenuItem Header="Мои компоненты">
-                        <MenuItem Header="Внутренние" x:Name="ComponentsMenu"></MenuItem>
-                        <MenuItem Header="На продажу" x:Name="ComponentsForSaleMenu"></MenuItem>
-                    </MenuItem>
+                    <MenuItem Header="Внутренние" x:Name="ComponentsMenu"></MenuItem>
+                    <MenuItem Header="На продажу" x:Name="ComponentsForSaleMenu"></MenuItem>
                 </MenuItem>
             </MenuItem>
             <MenuItem Header="Клиенты" x:Name="ClientsMenu"></MenuItem>
@@ -55,7 +53,7 @@
             </MenuItem>
             <MenuItem Header="Настройки" x:Name="SettingsMenu"></MenuItem>
         </Menu>
-        
+
         <!-- Row 1 -->
         <ContentControl Grid.Row="1" Grid.Column="1"
                         Grid.RowSpan="3" Grid.ColumnSpan="4"

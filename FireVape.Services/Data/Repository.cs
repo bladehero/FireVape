@@ -150,12 +150,15 @@ namespace FireVape.Services.Data
 
         public async Task SaveAsync()
         {
-            var content = JsonConvert.SerializeObject(_elements, _serializationSettings);
+            if (!IsSaved)
+            {
+                var content = JsonConvert.SerializeObject(_elements, _serializationSettings);
 
-            using var writer = new StreamWriter(RepositoryPath, false);
-            await writer.WriteAsync(content);
+                using var writer = new StreamWriter(RepositoryPath, false);
+                await writer.WriteAsync(content);
 
-            IsSaved = true;
+                IsSaved = true;
+            }
         }
 
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)

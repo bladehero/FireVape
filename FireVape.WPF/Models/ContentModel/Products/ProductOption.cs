@@ -9,6 +9,11 @@ namespace FireVape.WPF.Models.ContentModel.Products
         private IProductLine<IVolumeable> productLine;
         private IVolumeable value;
 
+        public ProductOption()
+        {
+            value = new VolumeOption();
+        }
+
         public IProductLine<IVolumeable> ProductLine
         {
             get => productLine;

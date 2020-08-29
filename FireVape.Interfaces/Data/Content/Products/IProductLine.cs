@@ -8,5 +8,6 @@ namespace FireVape.Interfaces.Data.Content.Products
     {
         string Name { get; set; }
         IList<IProductOption<T>> Options { get; set; }
+        string StringOptions { get; }
     }
 }

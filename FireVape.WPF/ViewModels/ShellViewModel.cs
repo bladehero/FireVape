@@ -19,11 +19,12 @@ namespace FireVape.WPF.ViewModels
         {
             _viewModels = new List<BaseUnitViewModel>
             {
-                new FirmsViewModel(UnitOfWork, ResourceService, WindowManager),
-                new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager),
-                new ComponentsForSaleViewModel(UnitOfWork, ResourceService, WindowManager),
                 new ClientsViewModel(UnitOfWork, ResourceService, WindowManager),
+                new ComponentsForSaleViewModel(UnitOfWork, ResourceService, WindowManager),
+                new ComponentsViewModel(UnitOfWork, ResourceService, WindowManager),
+                new FirmsViewModel(UnitOfWork, ResourceService, WindowManager),
                 new OrderStatusesViewModel(UnitOfWork, ResourceService, WindowManager),
+                new ProductLinesViewModel(UnitOfWork, ResourceService, WindowManager),
             };
         }
 
@@ -98,7 +99,8 @@ namespace FireVape.WPF.ViewModels
 
         public void ProductLinesMenu()
         {
-            ActivateItem(null);
+            var vm = GetViewModel<ProductLinesViewModel>();
+            ActivateItem(vm);
         }
 
         public void LiquidsMenu()

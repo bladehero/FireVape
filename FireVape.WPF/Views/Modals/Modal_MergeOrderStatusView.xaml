@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FireVape.WPF.Views"
         Title="Создать статус для заказа"
-        Height="160" Width="400"
+        Height="120" Width="400"
         ResizeMode="NoResize">
     <Grid>
         <Grid.RowDefinitions>
@@ -45,4 +45,3 @@
         </StackPanel>
     </Grid>
 </Window>
-

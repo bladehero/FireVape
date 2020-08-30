@@ -2,7 +2,7 @@
 
 namespace FireVape.WPF.Models.ContentModel
 {
-    public class VolumeOption : Entity, IVolumeable
+    public class VolumeOption : PropertyChangeNotifier, IVolumeable
     {
         private int volume;
 
